@@ -12,9 +12,9 @@ extern "C" {
 #ifndef WAI_FUNCSPEC
 #ifdef _WIN32
 #ifdef WAI_EXPORT
-#define WAI_FUNSPEC __declspec(dllexport)
+#define WAI_FUNCSPEC __declspec(dllexport)
 #else
-#define WAI_FUNSPEC __declspec(dllimport)
+#define WAI_FUNCSPEC __declspec(dllimport)
 #endif
 #else
 #define WAI_FUNCSPEC
