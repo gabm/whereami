@@ -71,6 +71,7 @@ extern "C" {
 #ifdef __cplusplus
 }
 
+#include <string>
 #define CPP_FUNCTION(function)     inline std::string function() { \
 int length, dirname_length; \
 length = WAI_PREFIX(getExecutablePath)(NULL, 0, &dirname_length); \
