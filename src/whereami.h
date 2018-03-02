@@ -8,9 +8,19 @@
 extern "C" {
 #endif
 
+
 #ifndef WAI_FUNCSPEC
-  #define WAI_FUNCSPEC
+#ifdef __WIN32
+    #ifdef WAI_EXPORT
+    #define WAI_FUNSPEC __declspec(dllexport)
+    #else
+    #define WAI_FUNSPEC __declspec(dllimport)
+    #endif
+#else
+    #define WAI_FUNCSPEC
 #endif
+#endif
+
 #ifndef WAI_PREFIX
 #define WAI_PREFIX(function) wai_##function
 #endif
