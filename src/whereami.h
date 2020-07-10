@@ -77,7 +77,7 @@ extern "C" {
 #include <vector>
 #define CPP_FUNCTION(function)     inline std::string function() { \
 int length, dirname_length; \
-length = WAI_PREFIX(getExecutablePath)(NULL, 0, &dirname_length); \
+length = WAI_PREFIX(function)(NULL, 0, &dirname_length); \
 if (length <= 0) return ""; \
     std::vector<char> path; \
     path.resize(length + 1); \
