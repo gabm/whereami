@@ -79,40 +79,46 @@ extern "C" {
 #define CPP_FUNCTION(function)     
 
 namespace wai {
+    inline std::string getExecutableFile() {
+    int length;
+    length = WAI_PREFIX(getExecutablePath)(NULL, 0, NULL);
+    if (length <= 0) return "";
   
-  enum class PathType{
-    File,
-    Folder
-  };
+    std::string path(length + 1, '\0');
+    WAI_PREFIX(getExecutablePath)(const_cast<char*>(path.data()), length, NULL);
+    return path;
+  }
 
-  inline std::string getExecutablePath(PathType type) {
+
+  inline std::string getExecutableFolder() {
     int length, dirname_length;
     length = WAI_PREFIX(getExecutablePath)(NULL, 0, &dirname_length);
     if (length <= 0) return "";
-      
-    if (type == PathType::Folder)
-      length = dirname_length;
-  
-    std::vector<char> path;
-    path.resize(length + 1);
-    WAI_PREFIX(getExecutablePath)(path.data(), length, NULL);
-    path[length + 1] = '\0';
-    return std::string(path.data());
+
+    std::string path(dirname_length + 1, '\0');
+    WAI_PREFIX(getExecutablePath)(const_cast<char*>(path.data()), dirname_length, NULL);
+    return path;
   }
-  
-  inline std::string getModulePath(PathType type) {
+
+  inline std::string getModuleFile() {
+    int length;
+    length = WAI_PREFIX(getModulePath)(NULL, 0, NULL);
+    if (length <= 0) return "";
+
+    std::string path(length + 1, '\0');
+    WAI_PREFIX(getModulePath)(const_cast<char*>(path.data()), length, NULL);
+    return path;
+  }
+
+
+  inline std::string getModuleFolder() {
     int length, dirname_length;
     length = WAI_PREFIX(getModulePath)(NULL, 0, &dirname_length);
     if (length <= 0) return "";
-      
-    if (type == PathType::Folder)
-      length = dirname_length;
-  
-    std::vector<char> path;
-    path.resize(length + 1);
-    WAI_PREFIX(getModulePath)(path.data(), length, NULL);
-    path[length + 1] = '\0';
-    return std::string(path.data());
+
+    std::string path(dirname_length + 1, '\0');
+    WAI_PREFIX(getModulePath)(const_cast<char*>(path.data()), dirname_length, NULL);
+    return path;
   }
 }
 #endif
