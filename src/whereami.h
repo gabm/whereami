@@ -75,20 +75,45 @@ extern "C" {
 
 #include <string>
 #include <vector>
-#define CPP_FUNCTION(function)     inline std::string function() { \
-int length; \
-length = WAI_PREFIX(function)(NULL, 0, NULL); \
-if (length <= 0) return ""; \
-    std::vector<char> path; \
-    path.resize(length + 1); \
-    WAI_PREFIX(function)(path.data(), length, NULL); \
-    path[length + 1] = '\0'; \
-    return std::string(path.data()); \
-}
+
+#define CPP_FUNCTION(function)     
 
 namespace wai {
-    CPP_FUNCTION(getExecutablePath);
-    CPP_FUNCTION(getModulePath);
+  
+  enum class PathType{
+    File,
+    Folder
+  };
+
+  inline std::string getExecutablePath(PathType type) {
+    int length, dirname_length;
+    length = WAI_PREFIX(getExecutablePath)(NULL, 0, &dirname_length);
+    if (length <= 0) return "";
+      
+    if (type == PathType::Folder)
+      length = dirname_length;
+  
+    std::vector<char> path;
+    path.resize(length + 1);
+    WAI_PREFIX(getExecutablePath)(path.data(), length, NULL);
+    path[length + 1] = '\0';
+    return std::string(path.data());
+  }
+  
+  inline std::string getModulePath(PathType type) {
+    int length, dirname_length;
+    length = WAI_PREFIX(getModulePath)(NULL, 0, &dirname_length);
+    if (length <= 0) return "";
+      
+    if (type == PathType::Folder)
+      length = dirname_length;
+  
+    std::vector<char> path;
+    path.resize(length + 1);
+    WAI_PREFIX(getModulePath)(path.data(), length, NULL);
+    path[length + 1] = '\0';
+    return std::string(path.data());
+  }
 }
 #endif
 
