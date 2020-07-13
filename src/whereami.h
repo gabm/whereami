@@ -84,9 +84,9 @@ namespace wai {
     length = WAI_PREFIX(getExecutablePath)(NULL, 0, NULL);
     if (length <= 0) return "";
   
-    std::string path(length + 1, '\0');
-    WAI_PREFIX(getExecutablePath)(const_cast<char*>(path.data()), length, NULL);
-    return path;
+    std::vector<char> path(length + 1, '\0');
+    WAI_PREFIX(getExecutablePath)(path.data(), length, NULL);
+    return std::string(path.data());
   }
 
 
@@ -95,11 +95,11 @@ namespace wai {
     length = WAI_PREFIX(getExecutablePath)(NULL, 0, NULL);
     if (length <= 0) return "";
 
-    std::string path(length + 1, '\0');
-    WAI_PREFIX(getExecutablePath)(const_cast<char*>(path.data()), length, &dirname_length);
+    std::vector<char> path(length + 1, '\0');
+    WAI_PREFIX(getExecutablePath)(path.data(), length, &dirname_length);
     if (dirname_length <= length)
 	path[dirname_length + 1] = '\0';
-    return path;
+    return std::string(path.data());
   }
 
   inline std::string getModuleFile() {
@@ -107,9 +107,9 @@ namespace wai {
     length = WAI_PREFIX(getModulePath)(NULL, 0, NULL);
     if (length <= 0) return "";
 
-    std::string path(length + 1, '\0');
-    WAI_PREFIX(getModulePath)(const_cast<char*>(path.data()), length, NULL);
-    return path;
+    std::vector<char> path(length + 1, '\0');
+    WAI_PREFIX(getModulePath)(path.data(), length, NULL);
+    return std::string(path.data());
   }
 
 
@@ -118,11 +118,11 @@ namespace wai {
       length = WAI_PREFIX(getModulePath)(NULL, 0, NULL);
       if (length <= 0) return "";
 
-      std::string path(length + 1, '\0');
-      WAI_PREFIX(getModulePath)(const_cast<char*>(path.data()), length, &dirname_length);
+      std::vector<char> path(length + 1, '\0');
+      WAI_PREFIX(getModulePath)(path.data(), length, &dirname_length);
       if (dirname_length <= length)
 	  path[dirname_length + 1] = '\0';
-      return path;
+      return std::string(path.data());
     }
 }
 #endif
