@@ -76,13 +76,13 @@ extern "C" {
 #include <string>
 #include <vector>
 #define CPP_FUNCTION(function)     inline std::string function() { \
-int length, dirname_length; \
-length = WAI_PREFIX(function)(NULL, 0, &dirname_length); \
+int length; \
+length = WAI_PREFIX(function)(NULL, 0, NULL); \
 if (length <= 0) return ""; \
     std::vector<char> path; \
     path.resize(length + 1); \
-    WAI_PREFIX(function)(path.data(), length, &dirname_length); \
-    path[dirname_length + 1] = '\0'; \
+    WAI_PREFIX(function)(path.data(), length, NULL); \
+    path[length + 1] = '\0'; \
     return std::string(path.data()); \
 }
 
